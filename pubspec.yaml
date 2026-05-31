@@ -1,0 +1,55 @@
+name: taskflow
+description: "A task management app with clean architecture, BLoC state management, and offline-first design."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # State Management
+  flutter_bloc: ^9.1.1
+  equatable: ^2.0.8
+
+  # Networking
+  dio: ^5.9.2
+
+  # Local Storage
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Navigation
+  go_router: ^15.1.3
+
+  # Dependency Injection
+  get_it: ^9.2.1
+
+  # Data Models
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+
+  # Firebase
+  firebase_core: ^4.9.0
+  firebase_auth: ^6.5.1
+  firebase_messaging: ^16.2.2
+
+  # Utilities
+  intl: ^0.20.2
+  flutter_local_notifications: ^20.1.0
+  uuid: ^4.5.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.15
+  freezed: ^3.0.6
+  json_serializable: ^6.9.5
+
+flutter:
+  uses-material-design: true

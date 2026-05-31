@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1062756871927",
+    "project_id": "taskflow-yeabs",
+    "storage_bucket": "taskflow-yeabs.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062756871927:android:1d76bb579f603c1bedadf2",
+        "android_client_info": {
+          "package_name": "com.yeabsira.taskflow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSDEmR6I4cG2ZHxcnSjiA9ETanyr-S8lQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

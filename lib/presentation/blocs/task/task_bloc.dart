@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/notifications/notification_service.dart';
 import '../../../domain/entities/task_entity.dart';
 import '../../../domain/repositories/task_repository.dart';
 import 'task_event.dart';
@@ -6,8 +7,9 @@ import 'task_state.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final TaskRepository _taskRepository;
+  final NotificationService _notificationService;
 
-  TaskBloc(this._taskRepository) : super(TaskInitial()) {
+  TaskBloc(this._taskRepository, this._notificationService) : super(TaskInitial()) {
     on<LoadTasks>(_onLoadTasks);
     on<AddTask>(_onAddTask);
     on<UpdateTask>(_onUpdateTask);
@@ -30,6 +32,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   Future<void> _onAddTask(AddTask event, Emitter<TaskState> emit) async {
     try {
       await _taskRepository.createTask(event.task);
+      _scheduleNotification(event.task);
       add(LoadTasks());
     } catch (e) {
       emit(TaskError('Failed to add task: ${e.toString()}'));
@@ -39,6 +42,11 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   Future<void> _onUpdateTask(UpdateTask event, Emitter<TaskState> emit) async {
     try {
       await _taskRepository.updateTask(event.task);
+      if (event.task.status == TaskStatus.completed) {
+        await _notificationService.cancelTaskReminder(event.task.id);
+      } else {
+        _scheduleNotification(event.task);
+      }
       add(LoadTasks());
     } catch (e) {
       emit(TaskError('Failed to update task: ${e.toString()}'));
@@ -47,10 +55,21 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   Future<void> _onDeleteTask(DeleteTask event, Emitter<TaskState> emit) async {
     try {
+      await _notificationService.cancelTaskReminder(event.taskId);
       await _taskRepository.deleteTask(event.taskId);
       add(LoadTasks());
     } catch (e) {
       emit(TaskError('Failed to delete task: ${e.toString()}'));
+    }
+  }
+
+  void _scheduleNotification(TaskEntity task) {
+    if (task.dueDate != null && task.status != TaskStatus.completed) {
+      _notificationService.scheduleTaskReminder(
+        taskId: task.id,
+        title: task.title,
+        dueDate: task.dueDate!,
+      );
     }
   }
 

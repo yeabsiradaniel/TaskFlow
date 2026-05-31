@@ -4,6 +4,7 @@ import '../../presentation/pages/login_page.dart';
 import '../../presentation/pages/register_page.dart';
 import '../../presentation/pages/task_detail_page.dart';
 import '../../presentation/pages/settings_page.dart';
+import '../../presentation/pages/categories_page.dart';
 
 class AppRouter {
   static GoRouter router({required bool isAuthenticated}) {
@@ -39,6 +40,10 @@ class AppRouter {
         GoRoute(
           path: '/settings',
           builder: (context, state) => const SettingsPage(),
+        ),
+        GoRoute(
+          path: '/categories',
+          builder: (context, state) => const CategoriesPage(),
         ),
       ],
     );

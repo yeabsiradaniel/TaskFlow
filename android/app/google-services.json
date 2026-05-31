@@ -12,7 +12,20 @@
           "package_name": "com.yeabsira.taskflow"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1062756871927-gkf009vhe4h2i7u0q1aavqc7mqkj5u8t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yeabsira.taskflow",
+            "certificate_hash": "21ed03426ea1e981f13a5059a26abf14563d8822"
+          }
+        },
+        {
+          "client_id": "1062756871927-ai5t3h58talcksu2ltqejiujr5ug6k6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCSDEmR6I4cG2ZHxcnSjiA9ETanyr-S8lQ"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062756871927-ai5t3h58talcksu2ltqejiujr5ug6k6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

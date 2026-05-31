@@ -1,13 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:equatable/equatable.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
 
-  AuthCubit(this._firebaseAuth) : super(AuthInitial());
+  AuthCubit(this._firebaseAuth, this._googleSignIn) : super(AuthInitial());
 
   Future<void> checkAuthStatus() async {
     final user = _firebaseAuth.currentUser;
@@ -44,7 +46,28 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> signInWithGoogle() async {
+    emit(AuthLoading());
+    try {
+      final googleUser = await _googleSignIn.authenticate();
+      final googleAuth = googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
+      emit(Authenticated(userCredential.user!));
+    } catch (e) {
+      emit(AuthError('Google sign-in failed. Please try again.'));
+    }
+  }
+
   Future<void> signOut() async {
+    try {
+      await _googleSignIn.disconnect();
+    } catch (_) {}
     await _firebaseAuth.signOut();
     emit(Unauthenticated());
   }

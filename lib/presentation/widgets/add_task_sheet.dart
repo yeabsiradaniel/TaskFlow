@@ -4,6 +4,7 @@ import 'package:uuid/uuid.dart';
 import '../../domain/entities/task_entity.dart';
 import '../blocs/task/task_bloc.dart';
 import '../blocs/task/task_event.dart';
+import '../blocs/category/category_cubit.dart';
 
 class AddTaskSheet extends StatefulWidget {
   const AddTaskSheet({super.key});
@@ -17,6 +18,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
   final _descriptionController = TextEditingController();
   TaskPriority _priority = TaskPriority.medium;
   DateTime? _dueDate;
+  String? _categoryId;
 
   @override
   void dispose() {
@@ -35,6 +37,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
           ? null
           : _descriptionController.text.trim(),
       priority: _priority,
+      categoryId: _categoryId,
       createdAt: DateTime.now(),
       dueDate: _dueDate,
     );
@@ -122,6 +125,46 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 12),
+          BlocBuilder<CategoryCubit, CategoryState>(
+            builder: (context, state) {
+              if (state is! CategoryLoaded || state.categories.isEmpty) {
+                return const SizedBox.shrink();
+              }
+              final categories = state.categories;
+              return DropdownButtonFormField<String?>(
+                value: _categoryId,
+                decoration: const InputDecoration(
+                  labelText: 'Category',
+                  prefixIcon: Icon(Icons.label_outline),
+                ),
+                items: [
+                  const DropdownMenuItem(
+                    value: null,
+                    child: Text('No category'),
+                  ),
+                  ...categories.map((cat) {
+                    return DropdownMenuItem(
+                      value: cat.id,
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Color(cat.colorValue),
+                            radius: 8,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(cat.name),
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+                onChanged: (value) {
+                  setState(() => _categoryId = value);
+                },
+              );
+            },
           ),
           const SizedBox(height: 12),
           OutlinedButton.icon(

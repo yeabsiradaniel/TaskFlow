@@ -154,6 +154,33 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                     ),
                     const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        const Expanded(child: Divider()),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            'or',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                        const Expanded(child: Divider()),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    OutlinedButton.icon(
+                      onPressed: () {
+                        context.read<AuthCubit>().signInWithGoogle();
+                      },
+                      icon: const Icon(Icons.g_mobiledata, size: 24),
+                      label: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text('Continue with Google'),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
                     TextButton(
                       onPressed: () => context.go('/login'),
                       child: const Text('Already have an account? Sign In'),

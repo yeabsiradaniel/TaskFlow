@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../blocs/auth/auth_cubit.dart';
+import '../blocs/theme/theme_cubit.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -29,6 +30,48 @@ class SettingsPage extends StatelessWidget {
                   leading: const Icon(Icons.person_outlined),
                   title: const Text('Account'),
                   subtitle: Text(email),
+                );
+              },
+            ),
+            const Divider(),
+            BlocBuilder<ThemeCubit, ThemeMode>(
+              builder: (context, themeMode) {
+                return ListTile(
+                  leading: Icon(
+                    themeMode == ThemeMode.dark
+                        ? Icons.dark_mode
+                        : themeMode == ThemeMode.light
+                            ? Icons.light_mode
+                            : Icons.brightness_auto,
+                  ),
+                  title: const Text('Theme'),
+                  subtitle: Text(
+                    themeMode == ThemeMode.dark
+                        ? 'Dark'
+                        : themeMode == ThemeMode.light
+                            ? 'Light'
+                            : 'System default',
+                  ),
+                  trailing: SegmentedButton<ThemeMode>(
+                    segments: const [
+                      ButtonSegment(
+                        value: ThemeMode.light,
+                        icon: Icon(Icons.light_mode, size: 18),
+                      ),
+                      ButtonSegment(
+                        value: ThemeMode.system,
+                        icon: Icon(Icons.brightness_auto, size: 18),
+                      ),
+                      ButtonSegment(
+                        value: ThemeMode.dark,
+                        icon: Icon(Icons.dark_mode, size: 18),
+                      ),
+                    ],
+                    selected: {themeMode},
+                    onSelectionChanged: (selected) {
+                      context.read<ThemeCubit>().setTheme(selected.first);
+                    },
+                  ),
                 );
               },
             ),

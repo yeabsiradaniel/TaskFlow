@@ -29,6 +29,10 @@ class _HomePageState extends State<HomePage> {
         title: const Text('TaskFlow'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.label_outline),
+            onPressed: () => context.push('/categories'),
+          ),
+          IconButton(
             icon: const Icon(Icons.filter_list),
             onPressed: _showFilterSheet,
           ),
@@ -93,33 +97,39 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             }
-            return ReorderableListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: state.filteredTasks.length,
-              onReorder: (oldIndex, newIndex) {
-                context.read<TaskBloc>().add(
-                      ReorderTasks(oldIndex, newIndex),
-                    );
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<TaskBloc>().add(LoadTasks());
+                await Future.delayed(const Duration(milliseconds: 500));
               },
-              itemBuilder: (context, index) {
-                final task = state.filteredTasks[index];
-                return TaskCard(
-                  key: ValueKey(task.id),
-                  task: task,
-                  onTap: () => context.push('/task/${task.id}'),
-                  onToggleStatus: () {
-                    final newStatus = task.status == TaskStatus.completed
-                        ? TaskStatus.pending
-                        : TaskStatus.completed;
-                    context.read<TaskBloc>().add(
-                          UpdateTask(task.copyWith(status: newStatus)),
-                        );
-                  },
-                  onDelete: () {
-                    context.read<TaskBloc>().add(DeleteTask(task.id));
-                  },
-                );
-              },
+              child: ReorderableListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: state.filteredTasks.length,
+                onReorder: (oldIndex, newIndex) {
+                  context.read<TaskBloc>().add(
+                        ReorderTasks(oldIndex, newIndex),
+                      );
+                },
+                itemBuilder: (context, index) {
+                  final task = state.filteredTasks[index];
+                  return TaskCard(
+                    key: ValueKey(task.id),
+                    task: task,
+                    onTap: () => context.push('/task/${task.id}'),
+                    onToggleStatus: () {
+                      final newStatus = task.status == TaskStatus.completed
+                          ? TaskStatus.pending
+                          : TaskStatus.completed;
+                      context.read<TaskBloc>().add(
+                            UpdateTask(task.copyWith(status: newStatus)),
+                          );
+                    },
+                    onDelete: () {
+                      context.read<TaskBloc>().add(DeleteTask(task.id));
+                    },
+                  );
+                },
+              ),
             );
           }
           return const SizedBox.shrink();

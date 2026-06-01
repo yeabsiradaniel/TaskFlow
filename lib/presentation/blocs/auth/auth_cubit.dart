@@ -60,7 +60,7 @@ class AuthCubit extends Cubit<AuthState> {
           await _firebaseAuth.signInWithCredential(credential);
       emit(Authenticated(userCredential.user!));
     } catch (e) {
-      emit(AuthError('Google sign-in failed. Please try again.'));
+      emit(AuthError('Google sign-in failed: $e'));
     }
   }
 

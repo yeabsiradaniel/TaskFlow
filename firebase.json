@@ -1,1 +1,24 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"taskflow-yeabs","appId":"1:1062756871927:android:1d76bb579f603c1bedadf2","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"taskflow-yeabs","configurations":{"android":"1:1062756871927:android:1d76bb579f603c1bedadf2"}}}}}}
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "taskflow-yeabs",
+          "appId": "1:1062756871927:android:1d76bb579f603c1bedadf2",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "taskflow-yeabs",
+          "configurations": {
+            "android": "1:1062756871927:android:1d76bb579f603c1bedadf2"
+          }
+        }
+      }
+    }
+  }
+}

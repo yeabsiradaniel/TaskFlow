@@ -2,32 +2,61 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static const _primaryColor = Color(0xFF6366F1);
-  static const _fontFamily = 'Roboto';
 
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
       colorSchemeSeed: _primaryColor,
-      fontFamily: _fontFamily,
       appBarTheme: const AppBarTheme(
-        centerTitle: true,
+        centerTitle: false,
         elevation: 0,
+        scrolledUnderElevation: 0.5,
       ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        elevation: 2,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
       ),
       cardTheme: CardThemeData(
-        elevation: 1,
+        elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
         ),
         filled: true,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
       ),
     );
   }
@@ -37,25 +66,55 @@ class AppTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       colorSchemeSeed: _primaryColor,
-      fontFamily: _fontFamily,
       appBarTheme: const AppBarTheme(
-        centerTitle: true,
+        centerTitle: false,
         elevation: 0,
+        scrolledUnderElevation: 0.5,
       ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        elevation: 2,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
       ),
       cardTheme: CardThemeData(
-        elevation: 1,
+        elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
         ),
         filled: true,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
       ),
     );
   }

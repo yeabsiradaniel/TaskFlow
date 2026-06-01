@@ -10,6 +10,7 @@ import 'presentation/blocs/auth/auth_cubit.dart';
 import 'presentation/blocs/task/task_bloc.dart';
 import 'presentation/blocs/category/category_cubit.dart';
 import 'presentation/blocs/theme/theme_cubit.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'core/notifications/notification_service.dart';
 
 void main() async {
@@ -19,6 +20,7 @@ void main() async {
   );
   await Hive.initFlutter();
   await initServiceLocator();
+  await sl<GoogleSignIn>().initialize();
   await sl<NotificationService>().init();
 
   runApp(const TaskFlowApp());

@@ -1,8 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../data/datasources/local/task_local_datasource.dart';
 import '../../data/datasources/local/category_local_datasource.dart';
+import '../../data/datasources/remote/task_remote_datasource.dart';
+import '../../data/datasources/remote/category_remote_datasource.dart';
 import '../../data/repositories/task_repository_impl.dart';
 import '../../data/repositories/category_repository_impl.dart';
 import '../../domain/repositories/task_repository.dart';
@@ -17,6 +20,7 @@ final sl = GetIt.instance;
 Future<void> initServiceLocator() async {
   // Firebase & Auth
   sl.registerLazySingleton(() => FirebaseAuth.instance);
+  sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton(() => GoogleSignIn.instance);
 
   // Notifications
@@ -25,13 +29,15 @@ Future<void> initServiceLocator() async {
   // Datasources
   sl.registerLazySingleton(() => TaskLocalDatasource());
   sl.registerLazySingleton(() => CategoryLocalDatasource());
+  sl.registerLazySingleton(() => TaskRemoteDatasource(sl()));
+  sl.registerLazySingleton(() => CategoryRemoteDatasource(sl()));
 
   // Repositories
   sl.registerLazySingleton<TaskRepository>(
-    () => TaskRepositoryImpl(sl()),
+    () => TaskRepositoryImpl(sl(), sl(), sl()),
   );
   sl.registerLazySingleton<CategoryRepository>(
-    () => CategoryRepositoryImpl(sl()),
+    () => CategoryRepositoryImpl(sl(), sl(), sl()),
   );
 
   // BLoCs
